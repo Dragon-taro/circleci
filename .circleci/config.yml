@@ -40,7 +40,7 @@ workflows:
               ignore: /.*/
       - approval:
           type: approval
-      -deploy:
+      - deploy:
           requires:
             - approval
           filters:
