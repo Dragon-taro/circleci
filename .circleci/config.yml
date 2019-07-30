@@ -1,50 +1,74 @@
 version: 2
+
+defaults: &defaults
+  docker:
+    - image: circleci/node:8-browsers
+
 jobs:
-  test:
-    docker:
-      - image: circleci/node:8-browsers
+  build:
+    <<: *defaults
     steps:
       - checkout
-    run:
-      - name: test
-      - command: echo test
+      - run:
+          - name: build
+          - command: echo build
+
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          - name: test
+          - command: echo test
 
   test_for_prd:
-    docker:
-      - image: circleci/node:8-browsers
+    <<: *defaults
     steps:
       - checkout
-    run:
-      - name: test_for_prd
-      - command: echo test_for_prd
+      - run:
+          - name: test_for_prd
+          - command: echo test_for_prd
 
   deploy:
-    docker:
-      - image: circleci/node:8-browsers
+    <<: *defaults
     steps:
       - checkout
-    run:
-      - name: deplooy
-      - command: echo deplooy
+      - run:
+          - name: deplooy
+          - command: echo deplooy
 
 workflows:
   version: 2
   test_and_deploy:
     jobs:
+      # ブランチpushのみ発火
       - test
+
+      # ブランチpush＋指定したtagsで発火
+      - build:
+          tags:
+            only: /^v(\d\.){2}\d.*/
+
+      # 指定したtagsでのみ発火
       - test_for_prd:
           filters:
             tags:
               only: /^v(\d\.){2}\d.*/
             branches:
               ignore: /.*/
+
+      # 指定したtagsでのみ発火（コマンドは実行しない）
       - approval:
           type: approval
+          requires:
+            - build
           filters:
             tags:
               only: /^v(\d\.){2}\d.*/
             branches:
               ignore: /.*/
+
+      # 指定したtagsでのみ発火（approval後）
       - deploy:
           requires:
             - approval
