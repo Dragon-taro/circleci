@@ -10,32 +10,32 @@ jobs:
     steps:
       - checkout
       - run:
-          - name: build
-          - command: echo build
+          name: build
+          command: echo build
 
   test:
     <<: *defaults
     steps:
       - checkout
       - run:
-          - name: test
-          - command: echo test
+          name: test
+          command: echo test
 
   test_for_prd:
     <<: *defaults
     steps:
       - checkout
       - run:
-          - name: test_for_prd
-          - command: echo test_for_prd
+          name: test_for_prd
+          command: echo test_for_prd
 
   deploy:
     <<: *defaults
     steps:
       - checkout
       - run:
-          - name: deplooy
-          - command: echo deplooy
+          name: deplooy
+          command: echo deplooy
 
 workflows:
   version: 2
@@ -50,6 +50,8 @@ workflows:
               only: /^v(\d\.){2}\d.*/
       # 指定したtagsでのみ発火
       - test_for_prd:
+          requires:
+            - build
           filters:
             tags:
               only: /^v(\d\.){2}\d.*/
