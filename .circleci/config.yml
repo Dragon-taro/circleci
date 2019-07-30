@@ -43,5 +43,4 @@ workflows:
             - test_for_prd
           filters:
             tags:
-              only:
-                - /^release-.*/
+              only: /^release-.*/
