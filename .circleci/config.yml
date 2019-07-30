@@ -35,7 +35,7 @@ workflows:
       - test_for_prd:
           filters:
             tags:
-              only: /^release-.*/
+              only: /^v(\.[0-9]){3}.*/
             branches:
               ignore: /.*/
       - deploy:
@@ -43,6 +43,6 @@ workflows:
             - test_for_prd
           filters:
             tags:
-              only: /^release-.*/
+              only: /^v(\.[0-9]){3}.*/
             branches:
               ignore: /.*/
