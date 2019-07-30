@@ -36,9 +36,13 @@ workflows:
           filters:
             tags:
               only: /^release-.*/
+            branches:
+              ignore: /.*/
       - deploy:
           requires:
             - test_for_prd
           filters:
             tags:
               only: /^release-.*/
+            branches:
+              ignore: /.*/
