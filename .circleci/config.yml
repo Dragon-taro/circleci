@@ -46,8 +46,9 @@ workflows:
 
       # ブランチpush＋指定したtagsで発火
       - build:
-          tags:
-            only: /^v(\d\.){2}\d.*/
+          filters:
+            tags:
+              only: /^v(\d\.){2}\d.*/
 
       # 指定したtagsでのみ発火
       - test_for_prd:
