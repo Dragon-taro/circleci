@@ -38,10 +38,11 @@ workflows:
               only: /^v(\d\.){2}\d.*/
             branches:
               ignore: /.*/
-      - deploy:
+      - approval:
           type: approval
+      -deploy:
           requires:
-            - test_for_prd
+            - approval
           filters:
             tags:
               only: /^v(\d\.){2}\d.*/
