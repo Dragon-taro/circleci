@@ -77,8 +77,3 @@ workflows:
       - deploy:
           requires:
             - approval
-          filters:
-            tags:
-              only: /^v(\d\.){2}\d.*/
-            branches:
-              ignore: /.*/
