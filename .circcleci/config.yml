@@ -1,0 +1,47 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - checkout
+    run:
+      - name: test
+      - command: echo test
+
+  test_for_prd:
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - checkout
+    run:
+      - name: test_for_prd
+      - command: echo test_for_prd
+
+  deploy:
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - checkout
+    run:
+      - name: deplooy
+      - command: echo deplooy
+
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - test
+      # これより下はtagが着いた時にだけ発火するはず。。
+      - test_for_prd:
+        filters:
+          tags:
+            only:
+              - /^release-.*/
+      - deploy:
+          requires:
+            - test_for_prd
+          filters:
+            tags:
+              only:
+                - /^release-.*/
