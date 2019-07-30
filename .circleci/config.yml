@@ -40,6 +40,11 @@ workflows:
               ignore: /.*/
       - approval:
           type: approval
+          filters:
+            tags:
+              only: /^v(\d\.){2}\d.*/
+            branches:
+              ignore: /.*/
       - deploy:
           requires:
             - approval
