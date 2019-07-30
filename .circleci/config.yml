@@ -43,13 +43,11 @@ workflows:
     jobs:
       # ブランチpushのみ発火
       - test
-
       # ブランチpush＋指定したtagsで発火
       - build:
           filters:
             tags:
               only: /^v(\d\.){2}\d.*/
-
       # 指定したtagsでのみ発火
       - test_for_prd:
           filters:
@@ -57,7 +55,6 @@ workflows:
               only: /^v(\d\.){2}\d.*/
             branches:
               ignore: /.*/
-
       # 指定したtagsでのみ発火（コマンドは実行しない）
       - approval:
           type: approval
@@ -68,7 +65,6 @@ workflows:
               only: /^v(\d\.){2}\d.*/
             branches:
               ignore: /.*/
-
       # 指定したtagsでのみ発火（approval後）
       - deploy:
           requires:
