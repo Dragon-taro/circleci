@@ -32,12 +32,10 @@ workflows:
   test_and_deploy:
     jobs:
       - test
-      # これより下はtagが着いた時にだけ発火するはず。。
       - test_for_prd:
-        filters:
-          tags:
-            only:
-              - /^release-.*/
+          filters:
+            tags:
+              only: /^release-.*/
       - deploy:
           requires:
             - test_for_prd
