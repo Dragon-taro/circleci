@@ -39,6 +39,7 @@ workflows:
             branches:
               ignore: /.*/
       - deploy:
+          type: approval
           requires:
             - test_for_prd
           filters:
